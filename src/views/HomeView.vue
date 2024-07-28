@@ -1,36 +1,38 @@
 <template>
   <div class="home">
 
-home
-<p >My name is {{name}} and my age is {{age}}</p>
-<button @click="handleEvent()">click me </button>
-<button @click="age++">add 1 to age</button>
-<input type="text" v-model="name">
+<h2>Refs</h2>
+<p >{{saidOne.name}} - {{ saidOne.age }}</p>
+<button @click="updatesaidOne()">update saidOne age</button>
+<hr>
+<h2>Reactive</h2>
+<p >{{saidTwo.name}} - {{ saidTwo.age }}</p>
+<button @click="updatesaidTwo()">update saidTwo age</button>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref,reactive } from 'vue'
 // @ is an alias to /src
 
 
 export default {
   name: 'HomeView',
   setup(){
-    console.log('setuped')
-    const name =ref('said') 
-    const age = ref(21)
-
-    // const p = ref(null)
-    const handleEvent = () => {
-      name.value = ref('Masoud')
-    
-    }
-
-    return {
-      name,
-      age,
-      handleEvent:handleEvent,
+    const saidOne = ref({name:'said',age:41})
+    const saidTwo = reactive({name:'abu motion',age:21})
+   const updatesaidOne = () =>{
+    saidOne.value.age = 31
+   
+   }
+   const updatesaidTwo = () =>{
+    saidTwo.age = 11
+   }
+       return {
+      saidOne,
+      updatesaidOne,
+      saidTwo,
+      updatesaidTwo
       
     }
   } ,
