@@ -2,8 +2,10 @@
   <div class="home">
 
 home
-<p ref="p">My name is {{name}} and my age is {{age}}</p>
+<p >My name is {{name}} and my age is {{age}}</p>
 <button @click="handleEvent()">click me </button>
+<button @click="age++">add 1 to age</button>
+<input type="text" v-model="name">
   </div>
 </template>
 
@@ -16,21 +18,20 @@ export default {
   name: 'HomeView',
   setup(){
     console.log('setuped')
-    let name = 'said'
-    let age = 21
+    const name =ref('said') 
+    const age = ref(21)
 
-    const p = ref(null)
+    // const p = ref(null)
     const handleEvent = () => {
-      console.log(p,p.value)
-      p.value.classList.add('test')
-      p.value.textContent ='Hello, Said'
+      name.value = ref('Masoud')
+    
     }
 
     return {
       name,
       age,
       handleEvent:handleEvent,
-      p
+      
     }
   } ,
   
