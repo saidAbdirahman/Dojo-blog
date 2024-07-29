@@ -1,43 +1,35 @@
 <template>
   <div class="home">
-
-<input type="text" v-model="search">
-<p>search term - {{ search }} </p>
-<div v-for="name in matchingNames" :key="name">
-  {{ name }}
-</div>
-  </div>
-  <button @click="handleClick()">Stop watching</button>
+<h1>home</h1>
+<div v-if="error">{{error}}</div>
+<div v-if="posts.length"><PostList v-if="showposts" :posts="posts" /></div>
+<div v-else>Posts loading...</div>
+<button @click="showposts = !showposts">toggle</button>
+<button @click="posts.pop()">delete post</button>
+<!-- cron jobs in vue  -->
+    </div>
 </template>
 
 <script>
 
+import PostList from '@/components/PostList.vue';
 import { ref,reactive, computed, watch, watchEffect, handleError } from 'vue'
+import getPosts from '../compasable/getPosts'
 // @ is an alias to /src
+
 
 
 export default {
   name: 'HomeView',
+  components: {PostList},
   setup(){
-
-    const search = ref('')
-    const names = ref(['said', 'masoud', 'abdalla', 'ibra'])
-
-    const matchingNames = computed(() => {
-      return names.value.filter((name => name.includes(search.value)))
-    })
-    const stopWatch = watch(search, ()=>{
-      console.log('search changed')
-    })
-    const stopEffect = watchEffect(()=>{
-      console.log('watch effect')
-    })
-    const handleClick = () =>{
-      stopEffect()
-      stopWatch()
-    }
-       return { names, search, matchingNames, handleClick }
+   const {posts,error,load} = getPosts()
+   load()
+    const showposts = ref(true)
+    
+       return {posts,showposts,error}
   } ,
+  
   
 }
 </script>
